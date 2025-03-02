@@ -45,8 +45,17 @@ def main():
         route_nodes = nodes_proj.loc[shortest_path]
         route_edges = edges_proj.loc[shortest_path]
 
+        '''
+        # GeoJSON olarak export etme, opsyonel
+        print("Sonuclar GeoJSON formatinda kaydediliyor.")
+        route_edges.to_file("outputs/route_edges.geojson", driver="GeoJSON")
+        route_nodes.to_file("outputs/route_nodes.geojson", driver="GeoJSON")
+        edges_proj.to_file("outputs/edges_proj.geojson", driver="GeoJSON")
+        nodes_proj.to_file("outputs/nodes_proj.geojson", driver="GeoJSON")
+        '''
+
         # Görselleştirme yap ve HTML olarak kaydet
-        visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, output_html="outputs/shortest_path_visualization.html")
+        visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, source_node, target_node, output_html="outputs/shortest_path_visualization.html")
 
 if __name__ == "__main__":
     main()

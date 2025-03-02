@@ -1,7 +1,9 @@
 from keplergl import KeplerGl
-from tqdm import tqdm
+from shapely.geometry import Point
+import geopandas as gpd
+import json
 
-def visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, output_html="route_visualization.html"):
+def visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, source_node, target_node, output_html="route_visualization.html"):
     """
     Rota bilgilerini KeplerGL ile görselleştirir ve HTML olarak kaydeder.
     
@@ -10,272 +12,114 @@ def visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, output_htm
         route_nodes (GeoDataFrame): Rota düğümleri.
         edges_proj (GeoDataFrame): Tüm kenarlar.
         nodes_proj (GeoDataFrame): Tüm düğümler.
+        source_node (int): Kaynak düğüm ID'si.
+        target_node (int): Hedef düğüm ID'si.
         output_html (str): HTML çıktı dosyasının adı.
     """
+    # Kaynak ve hedef noktalarının koordinatlarını al
+    source_coords = (nodes_proj.loc[source_node].geometry.x, nodes_proj.loc[source_node].geometry.y)
+    target_coords = (nodes_proj.loc[target_node].geometry.x, nodes_proj.loc[target_node].geometry.y)
 
-    print("Harita oluşturuluyor...")
-    # KeplerGL haritası oluştur
-    route_muc = KeplerGl(height=700, data={"muc": route_edges, "edges": route_nodes, "network": edges_proj, "nodes": nodes_proj})
+    # Point geometrilerini oluştur
+    source_point = Point(source_coords)
+    target_point = Point(target_coords)
 
-    # Config yapılandırmasını ekle
-    config = {
-        'version': 'v1',
-        'config': {
-            'visState': {
-                'filters': [],
-                'layers': [
-                    {
-                        'id': '8qdqs2m',
-                        'type': 'geojson',
-                        'config': {
-                            'dataId': 'muc',
-                            'label': 'muc',
-                            'color': [77, 193, 156],
-                            'highlightColor': [252, 242, 26, 255],
-                            'columns': {'geojson': 'geometry'},
-                            'isVisible': True,
-                            'visConfig': {
-                                'opacity': 0.8,
-                                'strokeOpacity': 0.8,
-                                'thickness': 0.5,
-                                'strokeColor': None,
-                                'colorRange': {
-                                    'name': 'Global Warming',
-                                    'type': 'sequential',
-                                    'category': 'Uber',
-                                    'colors': ['#5A1846', '#900C3F', '#C70039', '#E3611C', '#F1920E', '#FFC300']
-                                },
-                                'strokeColorRange': {
-                                    'name': 'Global Warming',
-                                    'type': 'sequential',
-                                    'category': 'Uber',
-                                    'colors': ['#5A1846', '#900C3F', '#C70039', '#E3611C', '#F1920E', '#FFC300']
-                                },
-                                'radius': 10,
-                                'sizeRange': [0, 10],
-                                'radiusRange': [0, 50],
-                                'heightRange': [0, 500],
-                                'elevationScale': 5,
-                                'enableElevationZoomFactor': True,
-                                'stroked': True,
-                                'filled': False,
-                                'enable3d': False,
-                                'wireframe': False
-                            },
-                            'hidden': False,
-                            'textLabel': [{
-                                'field': None,
-                                'color': [255, 255, 255],
-                                'size': 18,
-                                'offset': [0, 0],
-                                'anchor': 'start',
-                                'alignment': 'center'
-                            }]
-                        },
-                        'visualChannels': {
-                            'colorField': None,
-                            'colorScale': 'quantile',
-                            'strokeColorField': None,
-                            'strokeColorScale': 'quantile',
-                            'sizeField': None,
-                            'sizeScale': 'linear',
-                            'heightField': None,
-                            'heightScale': 'linear',
-                            'radiusField': None,
-                            'radiusScale': 'linear'
-                        }
-                    },
-                    {
-                        'id': 'p557il8',
-                        'type': 'geojson',
-                        'config': {
-                            'dataId': 'edges',
-                            'label': 'edges',
-                            'color': [23, 184, 190],
-                            'highlightColor': [252, 242, 26, 255],
-                            'columns': {'geojson': 'geometry'},
-                            'isVisible': True,
-                            'visConfig': {
-                                'opacity': 0.8,
-                                'strokeOpacity': 0.8,
-                                'thickness': 0.5,
-                                'strokeColor': None,
-                                'colorRange': {
-                                    'name': 'Global Warming',
-                                    'type': 'sequential',
-                                    'category': 'Uber',
-                                    'colors': ['#5A1846', '#900C3F', '#C70039', '#E3611C', '#F1920E', '#FFC300']
-                                },
-                                'strokeColorRange': {
-                                    'name': 'Global Warming',
-                                    'type': 'sequential',
-                                    'category': 'Uber',
-                                    'colors': ['#5A1846', '#900C3F', '#C70039', '#E3611C', '#F1920E', '#FFC300']
-                                },
-                                'radius': 10,
-                                'sizeRange': [0, 10],
-                                'radiusRange': [0, 50],
-                                'heightRange': [0, 500],
-                                'elevationScale': 5,
-                                'enableElevationZoomFactor': True,
-                                'stroked': False,
-                                'filled': True,
-                                'enable3d': False,
-                                'wireframe': False
-                            },
-                            'hidden': False,
-                            'textLabel': [{
-                                'field': None,
-                                'color': [255, 255, 255],
-                                'size': 18,
-                                'offset': [0, 0],
-                                'anchor': 'start',
-                                'alignment': 'center'
-                            }]
-                        },
-                        'visualChannels': {
-                            'colorField': None,
-                            'colorScale': 'quantile',
-                            'strokeColorField': None,
-                            'strokeColorScale': 'quantile',
-                            'sizeField': None,
-                            'sizeScale': 'linear',
-                            'heightField': None,
-                            'heightScale': 'linear',
-                            'radiusField': None,
-                            'radiusScale': 'linear'
-                        }
-                    },
-                    {
-                        'id': 'qwigsz',
-                        'type': 'geojson',
-                        'config': {
-                            'dataId': 'network',
-                            'label': 'network',
-                            'color': [246, 209, 138],
-                            'highlightColor': [252, 242, 26, 255],
-                            'columns': {'geojson': 'geometry'},
-                            'isVisible': True,
-                            'visConfig': {
-                                'opacity': 0.8,
-                                'strokeOpacity': 0.8,
-                                'thickness': 0.1,
-                                'strokeColor': None,
-                                'colorRange': {
-                                    'name': 'Global Warming',
-                                    'type': 'sequential',
-                                    'category': 'Uber',
-                                    'colors': ['#5A1846', '#900C3F', '#C70039', '#E3611C', '#F1920E', '#FFC300']
-                                },
-                                'strokeColorRange': {
-                                    'name': 'Global Warming',
-                                    'type': 'sequential',
-                                    'category': 'Uber',
-                                    'colors': ['#5A1846', '#900C3F', '#C70039', '#E3611C', '#F1920E', '#FFC300']
-                                },
-                                'radius': 10,
-                                'sizeRange': [0, 10],
-                                'radiusRange': [0, 50],
-                                'heightRange': [0, 500],
-                                'elevationScale': 5,
-                                'enableElevationZoomFactor': True,
-                                'stroked': True,
-                                'filled': False,
-                                'enable3d': False,
-                                'wireframe': False
-                            },
-                            'hidden': False,
-                            'textLabel': [{
-                                'field': None,
-                                'color': [255, 255, 255],
-                                'size': 18,
-                                'offset': [0, 0],
-                                'anchor': 'start',
-                                'alignment': 'center'
-                            }]
-                        },
-                        'visualChannels': {
-                            'colorField': None,
-                            'colorScale': 'quantile',
-                            'strokeColorField': None,
-                            'strokeColorScale': 'quantile',
-                            'sizeField': None,
-                            'sizeScale': 'linear',
-                            'heightField': None,
-                            'heightScale': 'linear',
-                            'radiusField': None,
-                            'radiusScale': 'linear'
-                        }
-                    }
-                ],
-                'interactionConfig': {
-                    'tooltip': {
-                        'fieldsToShow': {
-                            'muc': [
-                                {'name': 'osmid', 'format': None},
-                                {'name': 'oneway', 'format': None},
-                                {'name': 'lanes', 'format': None},
-                                {'name': 'name', 'format': None},
-                                {'name': 'highway', 'format': None}
-                            ],
-                            'edges': [
-                                {'name': 'y', 'format': None},
-                                {'name': 'x', 'format': None},
-                                {'name': 'highway', 'format': None},
-                                {'name': 'ref', 'format': None}
-                            ],
-                            'network': [
-                                {'name': 'osmid', 'format': None},
-                                {'name': 'oneway', 'format': None},
-                                {'name': 'lanes', 'format': None},
-                                {'name': 'name', 'format': None},
-                                {'name': 'highway', 'format': None}
-                            ]
-                        },
-                        'compareMode': False,
-                        'compareType': 'absolute',
-                        'enabled': True
-                    },
-                    'brush': {'size': 0.5, 'enabled': False},
-                    'geocoder': {'enabled': False},
-                    'coordinate': {'enabled': False}
-                },
-                'layerBlending': 'normal',
-                'splitMaps': [],
-                'animationConfig': {'currentTime': None, 'speed': 1}
-            },
-            'mapState': {
-                'bearing': 0,
-                'dragRotate': False,
-                'latitude': 48.13095857731462,
-                'longitude': 11.586642695981286,
-                'pitch': 0,
-                'zoom': 12.993509727831723,
-                'isSplit': False
-            },
-            'mapStyle': {
-                'styleType': 'dark',
-                'topLayerGroups': {},
-                'visibleLayerGroups': {
-                    'label': True,
-                    'road': True,
-                    'border': False,
-                    'building': True,
-                    'water': True,
-                    'land': True,
-                    '3d building': False
-                },
-                'threeDBuildingColor': [9.665468314072013, 17.18305478057247, 31.1442867897876],
-                'mapStyles': {}
-            }
-        }
+    # GeoDataFrame oluştur
+    start_end_points = gpd.GeoDataFrame({
+        'geometry': [source_point, target_point],
+        'name': ['Kaynak', 'Hedef']  # Noktaları etiketlemek için
+    }, crs=nodes_proj.crs)  # Mevcut projeksiyonu kullanın
+
+    # Koordinatları WGS84 (EPSG:4326) formatına dönüştür
+    start_end_points_wgs84 = start_end_points.to_crs(epsg=4326)
+
+    # Kaynak noktasının WGS84 koordinatlarını al
+    source_lat = start_end_points_wgs84.iloc[0].geometry.y  # Latitude (enlem)
+    source_lon = start_end_points_wgs84.iloc[0].geometry.x  # Longitude (boylam)
+
+    # Harita merkezini ve zoom seviyesini ayarla (source_node'a odaklan)
+    map_center = {
+        "latitude": source_lat,  # Kaynak düğümün enlemi (latitude)
+        "longitude": source_lon,  # Kaynak düğümün boylamı (longitude)
+        "zoom": 13.5
     }
 
+    # KeplerGL haritası oluştur
+    route_muc = KeplerGl(height=823, width=957, data={
+        "muc": route_edges,
+        "edges": route_nodes,
+        "network": edges_proj,
+        "nodes": nodes_proj,
+        "start_end": start_end_points_wgs84  # WGS84 formatında noktalar
+    })
+
+    # Config dosyasını yükle
+    config_path = "outputs/updated_kepler_config.json"  # Config dosyasının yolu
+    with open(config_path, 'r') as f:
+        updated_config = json.load(f)
+
+    # Harita merkezini ve zoom seviyesini config'e ekle
+    updated_config["config"]["mapState"] = {
+        "bearing": 0,
+        "dragRotate": False,
+        "latitude": map_center["latitude"],
+        "longitude": map_center["longitude"],
+        "pitch": 0,
+        "zoom": map_center["zoom"],
+        "isSplit": False,
+    }
+
+    # Güncel config'i haritaya uygula
     print("Config yapılandırması uygulanıyor...")
-    # Config'i haritaya uygula
-    route_muc.config = config
+    route_muc.config = updated_config["config"]
 
     # HTML olarak kaydet
     print(f"HTML dosyası kaydediliyor: {output_html}")
     route_muc.save_to_html(file_name=output_html)
     print(f"Görselleştirme sonucu '{output_html}' olarak kaydedildi.")
+
+
+  # HTML dosyasını aç ve gereksiz CSS yazısını sil
+    with open(output_html, "r+") as file:
+        content = file.read()
+        
+        # Gereksiz CSS yazısını sil
+        unwanted_css = '''font-family: ff-clan-web-pro, 'Helvetica Neue', Helvetica, sans-serif; 
+        font-weight: 400; 
+        font-size: 0.875em; 
+        line-height: 1.71429; 
+        *, *:before, *:after { 
+            -webkit-box-sizing: border-box; 
+            -moz-box-sizing: border-box; 
+            box-sizing: border-box; 
+        } 
+        body { 
+            margin: 0; 
+            padding: 0; 
+        }'''
+        
+        # Tam ekran yapmak için CSS ekle
+        fullscreen_css = '''<style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .kepler-gl {
+            height: 100vh !important;
+            width: 100vw !important;
+        }
+        </style>'''
+
+        
+        # CSS'i HTML dosyasına ekle
+        content = content.replace('<style>', fullscreen_css + '<style>')
+
+        # Gereksiz CSS yazısını içeren kısmı sil
+        content = content.replace(unwanted_css, "")
+
+        # Dosyayı başa sar ve güncellenmiş içeriği yaz
+        file.seek(0)
+        file.write(content)
+        file.truncate()
