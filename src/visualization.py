@@ -27,21 +27,21 @@ def visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, source_nod
     # GeoDataFrame oluştur
     start_end_points = gpd.GeoDataFrame({
         'geometry': [source_point, target_point],
-        'name': ['Kaynak', 'Hedef']  # Noktaları etiketlemek için
-    }, crs=nodes_proj.crs)  # Mevcut projeksiyonu kullanın
+        'name': ['Kaynak', 'Hedef']  
+    }, crs=nodes_proj.crs)  
 
     # Koordinatları WGS84 (EPSG:4326) formatına dönüştür
     start_end_points_wgs84 = start_end_points.to_crs(epsg=4326)
 
     # Kaynak noktasının WGS84 koordinatlarını al
-    source_lat = start_end_points_wgs84.iloc[0].geometry.y  # Latitude (enlem)
-    source_lon = start_end_points_wgs84.iloc[0].geometry.x  # Longitude (boylam)
+    source_lat = start_end_points_wgs84.iloc[0].geometry.y  
+    source_lon = start_end_points_wgs84.iloc[0].geometry.x  
 
     # Harita merkezini ve zoom seviyesini ayarla (source_node'a odaklan)
     map_center = {
-        "latitude": source_lat,  # Kaynak düğümün enlemi (latitude)
-        "longitude": source_lon,  # Kaynak düğümün boylamı (longitude)
-        "zoom": 13.5
+        "latitude": source_lat,  
+        "longitude": source_lon,  
+        "zoom": 13.2
     }
 
     # KeplerGL haritası oluştur
@@ -54,7 +54,7 @@ def visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, source_nod
     })
 
     # Config dosyasını yükle
-    config_path = "outputs/updated_kepler_config.json"  # Config dosyasının yolu
+    config_path = "outputs/updated_kepler_config.json" 
     with open(config_path, 'r') as f:
         updated_config = json.load(f)
 
@@ -68,6 +68,16 @@ def visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, source_nod
         "zoom": map_center["zoom"],
         "isSplit": False,
     }
+
+
+    # Legend 
+    updated_config["config"]["visState"]["uiState"] = {
+        "legend": {
+        "position": "bottom-right",  
+        "active": True,           
+        "show": True              
+    }
+} 
 
     # Güncel config'i haritaya uygula
     print("Config yapılandırması uygulanıyor...")
@@ -119,7 +129,6 @@ def visualize_route(route_edges, route_nodes, edges_proj, nodes_proj, source_nod
         # Gereksiz CSS yazısını içeren kısmı sil
         content = content.replace(unwanted_css, "")
 
-        # Dosyayı başa sar ve güncellenmiş içeriği yaz
         file.seek(0)
         file.write(content)
         file.truncate()

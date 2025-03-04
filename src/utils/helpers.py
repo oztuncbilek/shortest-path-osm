@@ -4,8 +4,8 @@ from shapely.geometry import Point
 
 def get_project_root():
     """Projenin kök dizinini dinamik olarak bulur."""
-    current_dir = os.path.dirname(os.path.abspath(__file__))  # helpers.py'nin bulunduğu dizin
-    return os.path.abspath(os.path.join(current_dir, "..", ".."))  # Proje kök dizinine çık
+    current_dir = os.path.dirname(os.path.abspath(__file__))  
+    return os.path.abspath(os.path.join(current_dir, "..", ".."))  
 
 def get_osm_file_path():
     """OSM dosyasının tam yolunu döner."""

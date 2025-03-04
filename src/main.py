@@ -38,10 +38,8 @@ def main():
     if not shortest_path:
         print("Hedef düğüme ulaşılamadı!")
     else:
-        # Rota bilgilerini yazdır
         print_route_info(shortest_path)
 
-        # Rota düğümlerini ve kenarlarını al
         route_nodes = nodes_proj.loc[shortest_path]
         route_edges = edges_proj.loc[shortest_path]
 
