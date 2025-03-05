@@ -20,4 +20,27 @@ The output HTML file is lightweight and can be easily shared or embedded in web
 applications. The project is designed to be modular and extensible, making it 
 easy to adapt for different use cases.
 
+## Running with Docker  
+
+You can run this project in a Docker container to ensure consistency across environments. Follow these steps:  
+
+### Build the Docker Image  
+Before running the container, build the image using:  
+```bash
+docker build -t map-visualization.
+
+### Run the Container  
+Once the build is complete, run the container:  
+
+```bash
+docker run -p 8050:8050 --name map-container map-visualization
+
+## Future Improvements  
+
+- **Dijkstra Algorithm Comparison**: Compare the Two-Q shortest path algorithm with Dijkstra’s algorithm.  
+- **Dual View Map Visualization**: Implement a dual-panel map to compare different routing results.  
+- **Algorithm Result Comparison**: Add a structured output comparison between multiple shortest path algorithms.  
+
+
+
 

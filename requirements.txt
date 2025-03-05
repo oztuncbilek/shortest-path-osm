@@ -1,0 +1,7 @@
+geopandas
+osmnx
+keplergl
+shapely
+tqdm
+fiona --prefer-binary
+scipy
