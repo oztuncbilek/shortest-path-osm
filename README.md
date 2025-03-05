@@ -25,15 +25,19 @@ easy to adapt for different use cases.
 You can run this project in a Docker container to ensure consistency across environments. Follow these steps:  
 
 ### Build the Docker Image  
+
 Before running the container, build the image using:  
+
 ```bash
 docker build -t map-visualization.
+```bash
 
 ### Run the Container  
 Once the build is complete, run the container:  
 
 ```bash
 docker run -p 8050:8050 --name map-container map-visualization
+```bash
 
 ## Future Improvements  
 
