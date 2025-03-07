@@ -4,21 +4,27 @@ This project uses OpenStreetMap (OSM) data to perform map visualization and rout
 
 ## **Features**  
 - Load and process OSM data.  
-- Plan routes using the shortest path algorithm.  
+- Plan routes using the shortest path algorithm (Two-Q and Dijkstra).  
 - Visualize routes on a map and save as an HTML file.  
+- Compare the results of multiple shortest path algorithms.  
 
-## About
-This project is entirely developed in Python, with the output being an 
-interactive HTML file. The HTML file is generated using the KeplerGL library 
-which allows for dynamic and interactive map visualizations. The project 
-demonstrates how to:
-- Load and process geographic data.
-- Implement a shortest path algorithm (Two-Q).
-- Visualize the results on an interactive map(Kepler GL).
+## **About**  
+This project is entirely developed in Python, with the output being an interactive HTML file. The HTML file is generated using the KeplerGL library, which allows for dynamic and interactive map visualizations. The project demonstrates how to:  
+- Load and process geographic data.  
+- Implement shortest path algorithms (Two-Q and Dijkstra).  
+- Visualize the results on an interactive map (KeplerGL).  
 
-The output HTML file is lightweight and can be easily shared or embedded in web 
-applications. The project is designed to be modular and extensible, making it 
-easy to adapt for different use cases.
+The output HTML file is lightweight and can be easily shared or embedded in web applications. The project is designed to be modular and extensible, making it easy to adapt for different use cases.
+
+## **Algorithm Result Comparison**  
+The project now supports a structured comparison between multiple shortest path algorithms. The following algorithms are implemented:  
+- **Two-Q Algorithm**: A custom shortest path algorithm optimized for large networks.  
+- **Dijkstra's Algorithm**: A classic shortest path algorithm for weighted graphs.  
+
+The comparison includes:  
+- Route length (number of nodes).  
+- Execution time.  
+- Visualization of both routes on a dual-view map.  
 
 ## Running with Docker  
 
@@ -41,9 +47,16 @@ docker run -p 8050:8050 --name map-container map-visualization
 
 ## Future Improvements  
 
-- **Dijkstra Algorithm Comparison**: Compare the Two-Q shortest path algorithm with Dijkstra’s algorithm.  
 - **Dual View Map Visualization**: Implement a dual-panel map to compare different routing results.  
 - **Algorithm Result Comparison**: Add a structured output comparison between multiple shortest path algorithms.  
+- **User Interface:**: Develop a web-based interface for easier interaction.
+
+
+
+
+
+
+
 
 
 
