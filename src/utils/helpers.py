@@ -21,6 +21,13 @@ def find_nearest_node(graph, point):
     """Bir noktaya en yakın düğümü bulur."""
     return ox.distance.nearest_nodes(graph, X=point.x, Y=point.y)
 
-def print_route_info(route):
-    """Rota bilgilerini terminalde yazdırır."""
-    print(f"Shortest path: {route}")
+def print_route_info(route, algorithm_name):
+    """Rota bilgilerini terminalde yazdırır.
+    
+    Args:
+        route (list): En kısa yolun düğüm listesi.
+        algorithm_name (str): Algoritmanın adı (örneğin, "Dijkstra" veya "Two-Q").
+    """
+    print(f"{algorithm_name} Algoritması ile Bulunan Rota:")
+    print(f"Rota Uzunluğu: {len(route)} düğüm")
+    print(f"Rota: {route}")
