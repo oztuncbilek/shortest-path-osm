@@ -48,7 +48,7 @@ docker run -p 8050:8050 --name map-container map-visualization
 ## Future Improvements  
 
 - **Dual View Map Visualization**: Implement a dual-panel map to compare different routing results.  
-- **Algorithm Result Comparison**: Add a structured output comparison between multiple shortest path algorithms.  
+ 
 - **User Interface:**: Develop a web-based interface for easier interaction.
 
 
