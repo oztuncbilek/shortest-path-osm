@@ -55,12 +55,10 @@ def visualize_dual_route(route_edges_two_q, route_nodes_two_q, route_edges_dijks
     # KeplerGL haritası oluştur
     route_map = KeplerGl(height=823, width=957, data={
         "two_q_edges": route_edges_two_q,
-        "two_q_nodes": route_nodes_two_q,
         "dijkstra_edges": route_edges_dijkstra,
-        "dijkstra_nodes": route_nodes_dijkstra,
-        "network": edges_proj,
-        "nodes": nodes_proj,
-        "start_end": start_end_points_wgs84  # WGS84 formatında noktalar
+        "start_end": start_end_points_wgs84 , # WGS84 formatında noktalar
+        "all_edges": edges_proj,  
+        "all_nodes": nodes_proj  
     })
 
     # Config dosyasını yükle 
@@ -81,48 +79,30 @@ def visualize_dual_route(route_edges_two_q, route_nodes_two_q, route_edges_dijks
         "longitude": map_center["longitude"],
         "pitch": 0,
         "zoom": map_center["zoom"],
-        "isSplit": True,  # Dual view için split modunu aktif et
+        "isSplit": True,  # Dual view aktif
     }
 
-    # Layer ayarları (Two-Q ve Dijkstra için farklı renkler)
-    updated_config["config"]["visState"]["layers"] = [
-        {
-            "id": "two_q_edges",
-            "type": "line",
-            "config": {
-                "dataId": "two_q_edges",
-                "label": "Two-Q Rota",
-                "color": [0, 0, 255],  # Mavi renk
-                "columns": {
-                    "lat": "geometry",
-                    "lng": "geometry"
-                },
-                "isVisible": True,
-                "visConfig": {
-                    "opacity": 0.8,
-                    "thickness": 2
-                }
-            }
-        },
-        {
-            "id": "dijkstra_edges",
-            "type": "line",
-            "config": {
-                "dataId": "dijkstra_edges",
-                "label": "Dijkstra Rota",
-                "color": [255, 0, 0],  # Kırmızı renk
-                "columns": {
-                    "lat": "geometry",
-                    "lng": "geometry"
-                },
-                "isVisible": True,
-                "visConfig": {
-                    "opacity": 0.8,
-                    "thickness": 2
-                }
-            }
+    # splitMaps bölümünü güncelle
+    updated_config["config"]["visState"]["splitMaps"] = [
+    {
+        "layers": {
+            "two_q_edges": True,  # Sol tarafta Two-Q rotası
+            "dijkstra_edges": False,  # Sol tarafta Dijkstra rotası gizli
+            "start_end_layer": True,  # Sol tarafta başlangıç ve bitiş noktaları
+            "all_edges": True,  # Sol tarafta tüm kenarlar (network ağı)
+            "all_nodes": True  # Sol tarafta tüm düğümler (network ağı)
         }
-    ]
+    },
+    {
+        "layers": {
+            "two_q_edges": False,  # Sağ tarafta Two-Q rotası gizli
+            "dijkstra_edges": True,  # Sağ tarafta Dijkstra rotası
+            "start_end_layer": True,  # Sağ tarafta başlangıç ve bitiş noktaları
+            "all_edges": True,  # Sağ tarafta tüm kenarlar (network ağı)
+            "all_nodes": True  # Sağ tarafta tüm düğümler (network ağı)
+        }
+    }
+]
 
     # Güncel config'i haritaya uygula
     print("Config yapılandırması uygulanıyor...")
@@ -166,8 +146,22 @@ def visualize_dual_route(route_edges_two_q, route_nodes_two_q, route_edges_dijks
         }
         </style>'''
 
-        # CSS'i HTML dosyasına ekle
-        content = content.replace('<style>', fullscreen_css + '<style>')
+        # Legend'i sabitlemek için CSS ekle
+        legend_css = '''<style>
+        .kg-legend {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            z-index: 1000 !important;
+            background-color: white !important;
+            padding: 10px !important;
+            border-radius: 5px !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        }
+        </style>'''
+
+       # CSS'i HTML dosyasına ekle
+        content = content.replace('<style>', fullscreen_css + legend_css + '<style>')
 
         # Gereksiz CSS yazısını içeren kısmı sil
         content = content.replace(unwanted_css, "")
