@@ -5,198 +5,37 @@
       "filters": [],
       "layers": [
         {
-          "id": "8qdqs2m",
+          "id": "two_q_edges",
           "type": "geojson",
           "config": {
-            "dataId": "muc",
-            "label": "muc",
-            "color": [77, 193, 156],
-            "highlightColor": [252, 242, 26, 255],
+            "dataId": "two_q_edges",
+            "label": "Two-Q Rota",
+            "color": [0, 0, 255],  
             "columns": {
               "geojson": "geometry"
             },
             "isVisible": true,
             "visConfig": {
               "opacity": 0.8,
-              "strokeOpacity": 0.8,
-              "thickness": 0.5,
-              "strokeColor": null,
-              "colorRange": {
-                "name": "Global Warming",
-                "type": "sequential",
-                "category": "Uber",
-                "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"]
-              },
-              "strokeColorRange": {
-                "name": "Global Warming",
-                "type": "sequential",
-                "category": "Uber",
-                "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"]
-              },
-              "radius": 10,
-              "sizeRange": [0, 10],
-              "radiusRange": [0, 50],
-              "heightRange": [0, 500],
-              "elevationScale": 5,
-              "enableElevationZoomFactor": true,
-              "stroked": true,
-              "filled": false,
-              "enable3d": false,
-              "wireframe": false
-            },
-            "hidden": false,
-            "textLabel": [
-              {
-                "field": null,
-                "color": [255, 255, 255],
-                "size": 18,
-                "offset": [0, 0],
-                "anchor": "start",
-                "alignment": "center"
-              }
-            ]
-          },
-          "visualChannels": {
-            "colorField": null,
-            "colorScale": "quantile",
-            "strokeColorField": null,
-            "strokeColorScale": "quantile",
-            "sizeField": null,
-            "sizeScale": "linear",
-            "heightField": null,
-            "heightScale": "linear",
-            "radiusField": null,
-            "radiusScale": "linear"
+              "thickness": 1
+            }
           }
         },
         {
-          "id": "p557il8",
+          "id": "dijkstra_edges",
           "type": "geojson",
           "config": {
-            "dataId": "edges",
-            "label": "edges",
-            "color": [23, 184, 190],
-            "highlightColor": [252, 242, 26, 255],
+            "dataId": "dijkstra_edges",
+            "label": "Dijkstra Rota",
+            "color": [205, 0, 0],  
             "columns": {
               "geojson": "geometry"
             },
             "isVisible": true,
             "visConfig": {
               "opacity": 0.8,
-              "strokeOpacity": 0.8,
-              "thickness": 0.5,
-              "strokeColor": null,
-              "colorRange": {
-                "name": "Global Warming",
-                "type": "sequential",
-                "category": "Uber",
-                "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"]
-              },
-              "strokeColorRange": {
-                "name": "Global Warming",
-                "type": "sequential",
-                "category": "Uber",
-                "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"]
-              },
-              "radius": 10,
-              "sizeRange": [0, 10],
-              "radiusRange": [0, 50],
-              "heightRange": [0, 500],
-              "elevationScale": 5,
-              "enableElevationZoomFactor": true,
-              "stroked": false,
-              "filled": true,
-              "enable3d": false,
-              "wireframe": false
-            },
-            "hidden": false,
-            "textLabel": [
-              {
-                "field": null,
-                "color": [255, 255, 255],
-                "size": 18,
-                "offset": [0, 0],
-                "anchor": "start",
-                "alignment": "center"
-              }
-            ]
-          },
-          "visualChannels": {
-            "colorField": null,
-            "colorScale": "quantile",
-            "strokeColorField": null,
-            "strokeColorScale": "quantile",
-            "sizeField": null,
-            "sizeScale": "linear",
-            "heightField": null,
-            "heightScale": "linear",
-            "radiusField": null,
-            "radiusScale": "linear"
-          }
-        },
-        {
-          "id": "qwigsz",
-          "type": "geojson",
-          "config": {
-            "dataId": "network",
-            "label": "network",
-            "color": [246, 209, 138],
-            "highlightColor": [252, 242, 26, 255],
-            "columns": {
-              "geojson": "geometry"
-            },
-            "isVisible": true,
-            "visConfig": {
-              "opacity": 0.8,
-              "strokeOpacity": 0.8,
-              "thickness": 0.1,
-              "strokeColor": null,
-              "colorRange": {
-                "name": "Global Warming",
-                "type": "sequential",
-                "category": "Uber",
-                "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"]
-              },
-              "strokeColorRange": {
-                "name": "Global Warming",
-                "type": "sequential",
-                "category": "Uber",
-                "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"]
-              },
-              "radius": 10,
-              "sizeRange": [0, 10],
-              "radiusRange": [0, 50],
-              "heightRange": [0, 500],
-              "elevationScale": 5,
-              "enableElevationZoomFactor": true,
-              "stroked": true,
-              "filled": false,
-              "enable3d": false,
-              "wireframe": false
-            },
-            "hidden": false,
-            "textLabel": [
-              {
-                "field": null,
-                "color": [255, 255, 255],
-                "size": 18,
-                "offset": [0, 0],
-                "anchor": "start",
-                "alignment": "center"
-              }
-            ]
-          },
-          "visualChannels": {
-            "colorField": null,
-            "colorScale": "quantile",
-            "strokeColorField": null,
-            "strokeColorScale": "quantile",
-            "sizeField": null,
-            "sizeScale": "linear",
-            "heightField": null,
-            "heightScale": "linear",
-            "radiusField": null,
-            "radiusScale": "linear"
+              "thickness": 1
+            }
           }
         },
         {
@@ -238,83 +77,21 @@
                 "alignment": "center"
               }
             ]
-          },
-          "visualChannels": {
-            "colorField": null,
-            "colorScale": "quantile",
-            "strokeColorField": null,
-            "strokeColorScale": "quantile",
-            "sizeField": null,
-            "sizeScale": "linear",
-            "heightField": null,
-            "heightScale": "linear",
-            "radiusField": null,
-            "radiusScale": "linear"
           }
         }
       ],
       "interactionConfig": {
         "tooltip": {
           "fieldsToShow": {
-            "muc": [
+            "two_q_edges": [
               {
                 "name": "osmid",
                 "format": null
-              },
-              {
-                "name": "oneway",
-                "format": null
-              },
-              {
-                "name": "lanes",
-                "format": null
-              },
-              {
-                "name": "name",
-                "format": null
-              },
-              {
-                "name": "highway",
-                "format": null
               }
             ],
-            "edges": [
-              {
-                "name": "y",
-                "format": null
-              },
-              {
-                "name": "x",
-                "format": null
-              },
-              {
-                "name": "highway",
-                "format": null
-              },
-              {
-                "name": "ref",
-                "format": null
-              }
-            ],
-            "network": [
+            "dijkstra_edges": [
               {
                 "name": "osmid",
-                "format": null
-              },
-              {
-                "name": "oneway",
-                "format": null
-              },
-              {
-                "name": "lanes",
-                "format": null
-              },
-              {
-                "name": "name",
-                "format": null
-              },
-              {
-                "name": "highway",
                 "format": null
               }
             ],
@@ -341,7 +118,22 @@
         }
       },
       "layerBlending": "normal",
-      "splitMaps": [],
+      "splitMaps": [
+        {
+          "layers": {
+            "two_q_edges": true,  
+            "dijkstra_edges": false,
+            "start_end_layer": true
+          }
+        },
+        {
+          "layers": {
+            "two_q_edges": false,
+            "dijkstra_edges": true,  
+            "start_end_layer": true
+          }
+        }
+      ],
       "animationConfig": {
         "currentTime": null,
         "speed": 1
@@ -354,10 +146,10 @@
       "longitude": 11.586642695981286,
       "pitch": 0,
       "zoom": 12.993509727831723,
-      "isSplit": false
+      "isSplit": true  
     },
     "mapStyle": {
-      "styleType": "basic",
+      "styleType": "voyager",
       "topLayerGroups": {},
       "visibleLayerGroups": {
         "label": true,
@@ -370,12 +162,13 @@
       },
       "threeDBuildingColor": [9.665468314072013, 17.18305478057247, 31.1442867897876],
       "mapStyles": {
-        "basic": {
-          "id": "basic",
-          "label": "Basic",
-          "url": "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
+        "voyager": {
+          "id": "voyager",
+          "label": "Voyager",
+          "url": "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
         }
       }
     }
   }
 }
+
