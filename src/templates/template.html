@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KeplerGL Harita</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <style>
+        /* Gereksiz CSS yazısını burada temizleyebiliriz */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .kepler-gl {
+            height: 100vh !important;
+            width: 100vw !important;
+        }
+        .kg-legend {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            z-index: 1000 !important;
+            background-color: white !important;
+            padding: 10px !important;
+            border-radius: 5px !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <!-- KeplerGL harita yükleme kodu buraya otomatik olarak eklenecek -->
+</body>
+</html>

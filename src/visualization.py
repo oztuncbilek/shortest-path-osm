@@ -41,18 +41,13 @@ def visualize_dual_route(route_edges_two_q, route_nodes_two_q, route_edges_dijks
     # Koordinatları WGS84 (EPSG:4326) formatına dönüştür
     start_end_points_wgs84 = start_end_points.to_crs(epsg=4326)
 
-    # Kaynak noktasının WGS84 koordinatlarını al
-    source_lat = start_end_points_wgs84.iloc[0].geometry.y
-    source_lon = start_end_points_wgs84.iloc[0].geometry.x
+    # Config dosyasını yükle (yeni konum: src/config/updated_kepler_config.json)
+    config_path = os.path.join(os.getcwd(), "src", "config", "updated_kepler_config.json")
+    with open(config_path, 'r', encoding="utf-8") as f:
+        updated_config = json.load(f)
 
-    # Harita merkezini ve zoom seviyesini ayarla (source_node'a odaklan)
-    map_center = {
-        "latitude": source_lat,
-        "longitude": source_lon,
-        "zoom": 13.2
-    }
-
-    # KeplerGL haritası oluştur
+    # Güncel config'i haritaya uygula
+    print("Config yapılandırması uygulanıyor...")
     route_map = KeplerGl(height=823, width=957, data={
         "two_q_edges": route_edges_two_q,
         "dijkstra_edges": route_edges_dijkstra,
@@ -60,52 +55,6 @@ def visualize_dual_route(route_edges_two_q, route_nodes_two_q, route_edges_dijks
         "all_edges": edges_proj,  
         "all_nodes": nodes_proj  
     })
-
-    # Config dosyasını yükle 
-    config_path = os.path.join(os.getcwd(), "outputs", "updated_kepler_config.json")
-
-    # Config dosyasının varlığını kontrol et
-    if not os.path.exists(config_path):
-        raise FileNotFoundError(f"Config file not found at: {config_path}")
-
-    with open(config_path, 'r', encoding="utf-8") as f:
-        updated_config = json.load(f)
-
-    # Harita merkezini ve zoom seviyesini config'e ekle
-    updated_config["config"]["mapState"] = {
-        "bearing": 0,
-        "dragRotate": False,
-        "latitude": map_center["latitude"],
-        "longitude": map_center["longitude"],
-        "pitch": 0,
-        "zoom": map_center["zoom"],
-        "isSplit": True,  # Dual view aktif
-    }
-
-    # splitMaps bölümünü güncelle
-    updated_config["config"]["visState"]["splitMaps"] = [
-    {
-        "layers": {
-            "two_q_edges": True,  # Sol tarafta Two-Q rotası
-            "dijkstra_edges": False,  # Sol tarafta Dijkstra rotası gizli
-            "start_end_layer": True,  # Sol tarafta başlangıç ve bitiş noktaları
-            "all_edges": True,  # Sol tarafta tüm kenarlar (network ağı)
-            "all_nodes": True  # Sol tarafta tüm düğümler (network ağı)
-        }
-    },
-    {
-        "layers": {
-            "two_q_edges": False,  # Sağ tarafta Two-Q rotası gizli
-            "dijkstra_edges": True,  # Sağ tarafta Dijkstra rotası
-            "start_end_layer": True,  # Sağ tarafta başlangıç ve bitiş noktaları
-            "all_edges": True,  # Sağ tarafta tüm kenarlar (network ağı)
-            "all_nodes": True  # Sağ tarafta tüm düğümler (network ağı)
-        }
-    }
-]
-
-    # Güncel config'i haritaya uygula
-    print("Config yapılandırması uygulanıyor...")
     route_map.config = updated_config["config"]
 
     # HTML olarak kaydet
@@ -113,58 +62,17 @@ def visualize_dual_route(route_edges_two_q, route_nodes_two_q, route_edges_dijks
     route_map.save_to_html(file_name=output_html)
     print(f"Görselleştirme sonucu '{output_html}' olarak kaydedildi.")
 
-    # HTML dosyasını aç ve gereksiz CSS yazısını sil
+    # HTML dosyasını aç ve template.html içeriğini ekle
     with open(output_html, "r+", encoding="utf-8") as file:
         content = file.read()
         
-        # Gereksiz CSS yazısını sil
-        unwanted_css = '''font-family: ff-clan-web-pro, 'Helvetica Neue', Helvetica, sans-serif; 
-        font-weight: 400; 
-        font-size: 0.875em; 
-        line-height: 1.71429; 
-        *, *:before, *:after { 
-            -webkit-box-sizing: border-box; 
-            -moz-box-sizing: border-box; 
-            box-sizing: border-box; 
-        } 
-        body { 
-            margin: 0; 
-            padding: 0; 
-        }'''
+        # Template dosyasını oku
+        template_path = os.path.join(os.getcwd(), "src", "templates", "template.html")
+        with open(template_path, 'r', encoding="utf-8") as template_file:
+            template_content = template_file.read()
         
-        # Tam ekran yapmak için CSS ekle
-        fullscreen_css = '''<style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-        .kepler-gl {
-            height: 100vh !important;
-            width: 100vw !important;
-        }
-        </style>'''
-
-        # Legend'i sabitlemek için CSS ekle
-        legend_css = '''<style>
-        .kg-legend {
-            position: fixed !important;
-            top: 20px !important;
-            right: 20px !important;
-            z-index: 1000 !important;
-            background-color: white !important;
-            padding: 10px !important;
-            border-radius: 5px !important;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-        }
-        </style>'''
-
-       # CSS'i HTML dosyasına ekle
-        content = content.replace('<style>', fullscreen_css + legend_css + '<style>')
-
-        # Gereksiz CSS yazısını içeren kısmı sil
-        content = content.replace(unwanted_css, "")
+        # HTML dosyasının içeriğini template ile değiştir
+        content = template_content.replace('<div id="map"></div>', content)
 
         file.seek(0)
         file.write(content)
