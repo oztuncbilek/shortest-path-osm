@@ -1,0 +1,24 @@
+
+    Algorithm Comparison Report 
+
+    Two-Q Algorithm:
+        - Route Length: 64 nodes
+        - Route Distance: 5280.05 meters
+        - Walking Time: 3771.46 seconds (62.86 minutes)
+        - Execution Time: 462.90 seconds
+        - Efficiency: Needs Improvement
+
+    Dijkstra Algorithm:
+        - Route Length: 82 nodes
+        - Route Distance: 4963.62 meters
+        - Walking Time: 3545.45 seconds (59.09 minutes)
+        - Execution Time: 1.56 seconds
+        - Efficiency: Excellent
+
+    Winner: Dijkstra
+
+    Summary:
+        - Two-Q is slower than Dijkstra.
+        - Two-Q found a longer route.
+        - Two-Q has a longer walking time.
+    
