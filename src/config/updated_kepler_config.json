@@ -10,7 +10,7 @@
           "config": {
             "dataId": "two_q_edges",
             "label": "Two-Q Rota",
-            "color": [0, 0, 255],  
+            "color": [0, 0, 255],
             "columns": {
               "geojson": "geometry"
             },
@@ -18,7 +18,28 @@
             "visConfig": {
               "opacity": 0.8,
               "thickness": 1
-            }
+            },
+            "textLabel": [],
+            "colorField": null,
+            "colorScale": "quantile",
+            "sizeField": null,
+            "sizeScale": "linear",
+            "heightField": null,
+            "heightScale": "linear",
+            "radiusField": null,
+            "radiusScale": "linear",
+            "strokeColorField": null,
+            "strokeColorScale": "quantile",
+            "strokeWidthField": null,
+            "strokeWidthScale": "linear",
+            "elevationScale": 5,
+            "enableElevationZoomFactor": true,
+            "stroked": true,
+            "filled": true,
+            "enable3d": false,
+            "wireframe": false,
+            "highlightColor": [252, 242, 26, 255],
+            "hidden": false
           }
         },
         {
@@ -27,7 +48,7 @@
           "config": {
             "dataId": "dijkstra_edges",
             "label": "Dijkstra Rota",
-            "color": [205, 0, 0],  
+            "color": [205, 0, 0],
             "columns": {
               "geojson": "geometry"
             },
@@ -35,7 +56,28 @@
             "visConfig": {
               "opacity": 0.8,
               "thickness": 1
-            }
+            },
+            "textLabel": [],
+            "colorField": null,
+            "colorScale": "quantile",
+            "sizeField": null,
+            "sizeScale": "linear",
+            "heightField": null,
+            "heightScale": "linear",
+            "radiusField": null,
+            "radiusScale": "linear",
+            "strokeColorField": null,
+            "strokeColorScale": "quantile",
+            "strokeWidthField": null,
+            "strokeWidthScale": "linear",
+            "elevationScale": 5,
+            "enableElevationZoomFactor": true,
+            "stroked": true,
+            "filled": true,
+            "enable3d": false,
+            "wireframe": false,
+            "highlightColor": [252, 242, 26, 255],
+            "hidden": false
           }
         },
         {
@@ -121,16 +163,20 @@
       "splitMaps": [
         {
           "layers": {
-            "two_q_edges": true,  
+            "two_q_edges": true,
             "dijkstra_edges": false,
-            "start_end_layer": true
+            "start_end_layer": true,
+            "all_edges": true,
+            "all_nodes": true
           }
         },
         {
           "layers": {
             "two_q_edges": false,
-            "dijkstra_edges": true,  
-            "start_end_layer": true
+            "dijkstra_edges": true,
+            "start_end_layer": true,
+            "all_edges": true,
+            "all_nodes": true
           }
         }
       ],
@@ -142,11 +188,11 @@
     "mapState": {
       "bearing": 0,
       "dragRotate": false,
-      "latitude": 48.13095857731462,
-      "longitude": 11.586642695981286,
+      "latitude": 48.144194,
+      "longitude": 11.545416,
       "pitch": 0,
-      "zoom": 12.993509727831723,
-      "isSplit": true  
+      "zoom": 12.2,
+      "isSplit": true
     },
     "mapStyle": {
       "styleType": "voyager",
@@ -171,4 +217,3 @@
     }
   }
 }
-
