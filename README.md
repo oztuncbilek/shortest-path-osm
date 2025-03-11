@@ -107,9 +107,9 @@ docker run -p 8050:8050 --name map-container map-visualization
 
 ## Future Improvements  
 
-- **Integrate Google Maps Live Traffic API:**: Enhance the route planning functionality by integrating the Google Maps Live Traffic API.
+- **Integrate Google Maps Live Traffic API:** Enhance the route planning functionality by integrating the Google Maps Live Traffic API.
  
-- **Manual Start and End Point Selection::**: EImplement a feature that allows users to manually select start and end points on the map. This will provide more flexibility and control over the route planning process, enabling users to customize their routes based on specific needs or preferences.
+- **Manual Start and End Point Selection::** EImplement a feature that allows users to manually select start and end points on the map. This will provide more flexibility and control over the route planning process, enabling users to customize their routes based on specific needs or preferences.
  
  - **Load New OSM Data Dynamically**: Add functionality to load new OpenStreetMap (OSM) data dynamically.
  
