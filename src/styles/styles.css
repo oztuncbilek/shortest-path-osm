@@ -1,16 +1,17 @@
-/* Tam ekran yapmak için CSS */
+/*  CSS for fullscreen*/
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow: hidden;
 }
+
 .kepler-gl {
     height: 100vh !important;
     width: 100vw !important;
 }
 
-/* Legend'i sabitlemek için CSS */
+/* CSS for fixing the legend */
 .kg-legend {
     position: fixed !important;
     top: 20px !important;
@@ -20,4 +21,30 @@ html, body {
     padding: 10px !important;
     border-radius: 5px !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    max-width: 300px !important; 
+    overflow-y: auto !important; 
+}
+
+/* Styling the legend content */
+.kg-legend h4 {
+    margin: 0 0 10px 0 !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+}
+
+.kg-legend-item {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 5px !important;
+}
+
+.kg-legend-item-color {
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 10px !important;
+    border-radius: 3px !important;
+}
+
+.kg-legend-item-label {
+    font-size: 14px !important;
 }

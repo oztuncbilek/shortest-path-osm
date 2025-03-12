@@ -10,11 +10,15 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
+# Gerekli Python bağımlılıklarını yükle
 COPY requirements.txt .  
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Tüm dosyaları kopyala
 COPY . .  
 
+# Çalışma dizinini /app/src olarak değiştir
 WORKDIR /app/src  
 
+# Uygulamayı çalıştır
 CMD ["python", "main.py"]

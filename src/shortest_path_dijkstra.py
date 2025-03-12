@@ -9,17 +9,17 @@ def dijkstra(graph, source, target):
     queue = [(0, source)]
     visited = set()
 
-    # Toplam düğüm sayısını al (ilerleme çubuğu için)
+    # Get total node number (for progress bar)
     total_nodes = len(nodes_proj)
 
-    # tqdm ile ilerleme çubuğu oluştur
-    with tqdm(total=total_nodes, desc="Dijkstra Algoritması Çalışıyor", unit="it", unit_scale=True) as pbar:
+    # Create progress bar with tqdm
+    with tqdm(total=total_nodes, desc="Dijkstra Algorithm Running", unit="it", unit_scale=True) as pbar:
         while queue:
             current_dist, current_node = heapq.heappop(queue)
 
             if current_node == target:
-                print(f"\nHedef düğüme ulaşıldı: {current_node}")
-                pbar.update(total_nodes - pbar.n)  # Progress bar'ı tamamla
+                print(f"\nTarget node reached: {current_node}")
+                pbar.update(total_nodes - pbar.n)  # Complete progress bar
                 break
 
             if current_node in visited:
@@ -27,7 +27,6 @@ def dijkstra(graph, source, target):
 
             visited.add(current_node)
 
-            # İlerleme çubuğunu güncelle
             pbar.update(1)
 
             for neighbor in graph.neighbors(current_node):

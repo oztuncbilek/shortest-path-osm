@@ -54,21 +54,18 @@ def two_q(graph, source, target):
     states = {}
     low_q, high_q = init_queues(nodes_proj, source, labels, states)
 
-    # Toplam düğüm sayısını al (ilerleme çubuğu için)
     total_nodes = len(nodes_proj)
 
-    # tqdm ile ilerleme çubuğu oluştur
-    with tqdm(total=total_nodes, desc="Two-Q Algoritması Çalışıyor", unit="it", unit_scale=True) as pbar:
+    with tqdm(total=total_nodes, desc="Two-Q Algorithm Running", unit="it", unit_scale=True) as pbar:
         while high_q or low_q:
             i = extract(low_q, high_q)
 
             if i == target:
-                print(f"\nHedef düğüme ulaşıldı: {i}")
+                print(f"\nTarget node reached: {i}")
                 break
 
             scan(low_q, high_q, labels, states, i, edges_proj)
 
-            # İlerleme çubuğunu güncelle
             pbar.update(1)
 
     shortest_path = []

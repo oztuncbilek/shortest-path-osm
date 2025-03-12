@@ -3,14 +3,14 @@ import os
 
 def calculate_route_length(graph, route):
     """
-    Rotanın toplam uzunluğunu metre cinsinden hesaplar.
+    Calculates the total length of the route in meters.
     
     Args:
-        graph (networkx.Graph): OSMnx grafik nesnesi.
-        route (list): Rota düğümlerinin listesi.
+        graph (networkx.Graph): OSMnx graph object.
+        route (list): List of nodes representing the route.
     
     Returns:
-        float: Rotanın toplam uzunluğu (metre cinsinden).
+        float: Total length of the route in meters.
     """
     total_length = 0.0
     for i in range(len(route) - 1):
@@ -18,46 +18,45 @@ def calculate_route_length(graph, route):
         v = route[i + 1]
         edge_data = graph.get_edge_data(u, v)
         if edge_data:
-            total_length += edge_data[0].get('length', 0.0)  # Kenar uzunluğunu ekle
+            total_length += edge_data[0].get('length', 0.0)  
     return total_length
 
 def calculate_travel_time_walking(route_length):
     """
-    Rotanın toplam yürüme süresini hesaplar.
+    Calculates the total walking time for the route.
     
     Args:
-        route_length (float): Rotanın toplam uzunluğu (metre cinsinden).
+        route_length (float): Total length of the route in meters.
     
     Returns:
-        float: Rotanın toplam yürüme süresi (saniye cinsinden).
+        float: Total walking time in seconds.
     """
-    walking_speed = 1.4  # Yürüme hızı (m/s)
+    walking_speed = 1.4  # Based on walking speed of average person (m/s)
     return route_length / walking_speed
 
 def save_algorithm_comparison(two_q_result, dijkstra_result, two_q_time, dijkstra_time, graph, output_file="outputs/algorithm_comparison.txt"):
     """
-    Algoritma karşılaştırma sonuçlarını bir text dosyasına kaydeder.
+    Saves the algorithm comparison results to a text file.
     
     Args:
-        two_q_result (list): Two-Q algoritmasının bulduğu rota.
-        dijkstra_result (list): Dijkstra algoritmasının bulduğu rota.
-        two_q_time (float): Two-Q algoritmasının çalışma süresi.
-        dijkstra_time (float): Dijkstra algoritmasının çalışma süresi.
-        graph (networkx.Graph): OSMnx grafik nesnesi.
-        output_file (str): Sonuçların kaydedileceği dosya yolu.
+        two_q_result (list): Route found by the Two-Q algorithm.
+        dijkstra_result (list): Route found by the Dijkstra algorithm.
+        two_q_time (float): Execution time of the Two-Q algorithm.
+        dijkstra_time (float): Execution time of the Dijkstra algorithm.
+        graph (networkx.Graph): OSMnx graph object.
+        output_file (str): Path to the output file where results will be saved.
     """
-    # outputs klasörünü kontrol et ve yoksa oluştur
+    # Check outputs folder and create one if there is none
     output_dir = os.path.dirname(output_file)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    # Rota uzunluklarını ve yürüme sürelerini hesapla
+    # Calculate distance and travel time
     two_q_length_meters = calculate_route_length(graph, two_q_result)
     dijkstra_length_meters = calculate_route_length(graph, dijkstra_result)
     two_q_travel_time_walking = calculate_travel_time_walking(two_q_length_meters)
     dijkstra_travel_time_walking = calculate_travel_time_walking(dijkstra_length_meters)
 
-    # Karşılaştırma sonuçlarını hazırla
     comparison_text = f"""
     Algorithm Comparison Report 
 
@@ -83,7 +82,6 @@ def save_algorithm_comparison(two_q_result, dijkstra_result, two_q_time, dijkstr
         - Two-Q has a {"shorter" if two_q_travel_time_walking < dijkstra_travel_time_walking else "longer"} walking time.
     """
 
-    # Sonuçları dosyaya yaz
     with open(output_file, "w") as file:
         file.write(comparison_text)
 
