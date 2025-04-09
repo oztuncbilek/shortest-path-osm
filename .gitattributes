@@ -4,3 +4,4 @@
 *.md linguist-language=Markdown
 
 outputs/* linguist-vendored
+notebooks/* linguist-vendored
